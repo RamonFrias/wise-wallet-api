@@ -12,25 +12,6 @@ namespace wise_wallet_api.Domains
         public EStatus CardStatus { get; set; }
         public List<Item> Itens{ get; set; } = new List<Item>();
 
-        public Card(int cardId, int cardNumber, Client clientId, Table tableId, EStatus cardStatus, List<Item> itens)
-        {
-            CardId = cardId;
-            CardNumber = cardNumber;
-            ClientId = clientId;
-            TableId = tableId;
-            CardStatus = cardStatus;
-            Itens = itens;
-        }
-
-        public Card(int cardId, int cardNumber, Client clientId, Table tableId, EStatus cardStatus)
-        {
-            CardId = cardId;
-            CardNumber = cardNumber;
-            ClientId = clientId;
-            TableId = tableId;
-            CardStatus = cardStatus;
-        }
-
         public void AddItem(Item item)
         {
             Itens.Add(item);
