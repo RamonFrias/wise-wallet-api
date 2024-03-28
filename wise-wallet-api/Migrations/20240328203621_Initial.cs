@@ -57,22 +57,22 @@ namespace wise_wallet_api.Migrations
                     CardId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CardNumber = table.Column<int>(type: "int", nullable: false),
-                    ClientId1 = table.Column<int>(type: "int", nullable: false),
-                    TableId1 = table.Column<int>(type: "int", nullable: false),
+                    ClientId = table.Column<int>(type: "int", nullable: false),
+                    TableId = table.Column<int>(type: "int", nullable: false),
                     CardStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cards", x => x.CardId);
                     table.ForeignKey(
-                        name: "FK_Cards_Client_ClientId1",
-                        column: x => x.ClientId1,
+                        name: "FK_Cards_Client_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "Client",
                         principalColumn: "ClientId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Cards_Table_TableId1",
-                        column: x => x.TableId1,
+                        name: "FK_Cards_Table_TableId",
+                        column: x => x.TableId,
                         principalTable: "Table",
                         principalColumn: "TableId",
                         onDelete: ReferentialAction.Cascade);
@@ -103,14 +103,14 @@ namespace wise_wallet_api.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cards_ClientId1",
+                name: "IX_Cards_ClientId",
                 table: "Cards",
-                column: "ClientId1");
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cards_TableId1",
+                name: "IX_Cards_TableId",
                 table: "Cards",
-                column: "TableId1");
+                column: "TableId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Item_CardId",

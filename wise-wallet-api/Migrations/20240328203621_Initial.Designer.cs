@@ -12,7 +12,7 @@ using wise_wallet_api.Data;
 namespace wise_wallet_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240328195427_Initial")]
+    [Migration("20240328203621_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -39,17 +39,17 @@ namespace wise_wallet_api.Migrations
                     b.Property<int>("CardStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("ClientId1")
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TableId1")
+                    b.Property<int>("TableId")
                         .HasColumnType("int");
 
                     b.HasKey("CardId");
 
-                    b.HasIndex("ClientId1");
+                    b.HasIndex("ClientId");
 
-                    b.HasIndex("TableId1");
+                    b.HasIndex("TableId");
 
                     b.ToTable("Cards");
                 });
@@ -132,21 +132,21 @@ namespace wise_wallet_api.Migrations
 
             modelBuilder.Entity("wise_wallet_api.Domains.Card", b =>
                 {
-                    b.HasOne("wise_wallet_api.Domains.Client", "ClientId")
+                    b.HasOne("wise_wallet_api.Domains.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientId1")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("wise_wallet_api.Domains.Table", "TableId")
+                    b.HasOne("wise_wallet_api.Domains.Table", "Table")
                         .WithMany()
-                        .HasForeignKey("TableId1")
+                        .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ClientId");
+                    b.Navigation("Client");
 
-                    b.Navigation("TableId");
+                    b.Navigation("Table");
                 });
 
             modelBuilder.Entity("wise_wallet_api.Domains.Item", b =>
