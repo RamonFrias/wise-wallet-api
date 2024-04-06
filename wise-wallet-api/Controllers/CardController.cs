@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
 using wise_wallet_api.Data;
 using wise_wallet_api.Domains;
 
@@ -31,7 +28,7 @@ namespace wise_wallet_api.Controllers
         {
             var card = await _context.Cards.FindAsync(id);
             if(card is null)
-                return BadRequest("Hero not found.");
+                return BadRequest("Card not found.");
             return Ok(card);
         }
 
