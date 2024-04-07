@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using wise_wallet_api.Data;
 
 var builder = WebApplication.CreateBuilder(args);

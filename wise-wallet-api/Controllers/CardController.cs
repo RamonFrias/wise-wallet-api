@@ -16,7 +16,7 @@ namespace wise_wallet_api.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("get_cards")]
         public async Task<IActionResult> GetAllCards()
         {
             var cards = await _context.Cards.ToListAsync();

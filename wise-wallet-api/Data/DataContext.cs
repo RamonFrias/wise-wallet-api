@@ -12,5 +12,6 @@ namespace wise_wallet_api.Data
         }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Table> Tables { get; set; }
     }
 }
