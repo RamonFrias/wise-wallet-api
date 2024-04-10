@@ -29,8 +29,8 @@ namespace wise_wallet_api.Controllers
         [HttpGet("get_tables")]
         public async Task<IActionResult> GetAllTables()
         {
-            var cards = await _context.Tables.ToListAsync();
-            return Ok(cards);
+            var table = await _context.Tables.ToListAsync();
+            return Ok(table);
         }
     }
 }
