@@ -25,6 +25,14 @@ namespace wise_wallet_api.Controllers
             return Ok(itens);
         }
 
+        [HttpGet("get_itens{id}")]
+        public async Task<IActionResult> GetItensByTableID(int id = 1)
+        {
+            var query = $"SELECT * FROM itens WHERE CardId = {id}";
+            var itens = await _context.Itens.FromSqlRaw(query).ToListAsync();
+            return Ok(itens);
+        }
+
         [HttpPost("post_itens")]
         public async Task<IActionResult> AddItem([FromBody] Item item)
         {
