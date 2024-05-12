@@ -7,7 +7,6 @@ namespace wise_wallet_api.Domains
     {
         public int CardId { get; set; }
         public int CardNumber { get; set; }
-        public Client Client { get; set; }
         public Table Table { get; set; }
         public EStatus CardStatus { get; set; }
         public List<Item> Itens{ get; set; } = new List<Item>();
