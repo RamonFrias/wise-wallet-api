@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata.Ecma335;
-using wise_wallet_api.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using wise_wallet_api.Domains;
+using wise_wallet_api.Repository.Implementations;
+using wise_wallet_api.Repository.Interfaces;
 
 namespace wise_wallet_api.Controllers
 {
@@ -11,34 +9,37 @@ namespace wise_wallet_api.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IItemBusiness _business;
 
-        public ItemController(DataContext context)
+        public ItemController(IItemBusiness business)
         {
-            _context = context;
+            _business = business;
         }
 
         [HttpGet("get_itens")]
-        public async Task<IActionResult> GetIten()
+        public IActionResult GetItens()
         {
-            var itens = await _context.Itens.ToListAsync();
-            return Ok(itens);
+            return Ok(_business.GetItens());
         }
 
         [HttpGet("get_itens{id}")]
-        public async Task<IActionResult> GetItensByTableID(int id = 1)
+        public IActionResult GetItensByCardID(int id = 1)
         {
-            var query = $"SELECT * FROM itens WHERE CardId = {id}";
-            var itens = await _context.Itens.FromSqlRaw(query).ToListAsync();
-            return Ok(itens);
+            return Ok(_business.GetItensByCardId(id));
         }
 
         [HttpPost("post_itens")]
-        public async Task<IActionResult> AddItem([FromBody] Item item)
+        public IActionResult AddItem([FromBody] Item item)
         {
-            _context.Itens.Add(item);
-            await _context.SaveChangesAsync();
-            return Ok("Item sucessfull Added");
+            if (item == null) return BadRequest();
+            return Ok(_business.AddItem(item));
+        }
+
+        [HttpDelete("delete_item")]
+        public IActionResult RemoveItem(int id) 
+        {
+            _business.RemoveItem(id);
+            return NoContent();
         }
     }
 }
