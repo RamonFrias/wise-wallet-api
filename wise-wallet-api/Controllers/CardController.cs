@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using wise_wallet_api.Business.Interfaces;
 using wise_wallet_api.Data;
 using wise_wallet_api.Domains;
 
@@ -9,35 +10,37 @@ namespace wise_wallet_api.Controllers
     [ApiController]
     public class CardController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly ICardBusiness _business;
 
-        public CardController(DataContext context)
+        public CardController(ICardBusiness business)
         {
-            _context = context;
+            _business = business;
         }
 
         [HttpGet("get_cards")]
-        public async Task<IActionResult> GetAllCards()
+        public IActionResult GetAllCards()
         {
-            var cards = await _context.Cards.ToListAsync();
-            return Ok(cards);
+            return Ok(_business.GetAll());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCard(int id)
+        public IActionResult GetCard(int id)
         {
-            var card = await _context.Cards.FindAsync(id);
-            if(card is null)
-                return BadRequest("Card not found.");
-            return Ok(card);
+            return Ok(_business.GetById(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCard(Card card)
+        public IActionResult AddCard(Card card)
         {
-            _context.Cards.Add(card);
-            await _context.SaveChangesAsync();
-            return Ok(await _context.Cards.ToListAsync());
+            if (card == null) return BadRequest();
+            return Ok(_business.CreateCard(card));
+        }
+
+        [HttpDelete("delete{id}")]
+        public IActionResult DeleteCard(int id)
+        {
+            _business.Delete(id);
+            return NoContent();
         }
     }
 }

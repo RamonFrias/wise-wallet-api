@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using wise_wallet_api.Data;
 using wise_wallet_api.Domains;
 using wise_wallet_api.Repository.Interfaces;
@@ -19,7 +18,7 @@ namespace wise_wallet_api.Repository.Implementations
         {
             try
             {
-                _context.Add(item);
+                _context.Itens.Add(item);
                 _context.SaveChanges();
             }
             catch (Exception ex)

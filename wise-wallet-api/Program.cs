@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using wise_wallet_api.Business.Implementations;
+using wise_wallet_api.Business.Interfaces;
 using wise_wallet_api.Data;
 using wise_wallet_api.Repository.Implementations;
 using wise_wallet_api.Repository.Interfaces;
@@ -19,11 +21,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
 {
+#pragma warning disable CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
     string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+#pragma warning restore CS8600 // Conversão de literal nula ou possível valor nulo em tipo não anulável.
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 builder.Services.AddScoped<IItemBusiness, ItemBusiness>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+
+builder.Services.AddScoped<ICardBusiness, CardBusiness>();
+builder.Services.AddScoped<ICardRepository, CardRepository>();
+
+builder.Services.AddScoped<ITableBusiness, TableBusiness>();
+builder.Services.AddScoped<ITableRepository, TableRepository>();
 
 var app = builder.Build();
 

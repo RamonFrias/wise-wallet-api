@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
+using wise_wallet_api.Business.Interfaces;
 using wise_wallet_api.Data;
 using wise_wallet_api.Domains;
 
@@ -11,26 +12,38 @@ namespace wise_wallet_api.Controllers
     [ApiController]
     public class TableController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly ITableBusiness _business;
 
-        public TableController(DataContext context)
+        public TableController(ITableBusiness business)
         {
-            _context = context;
+            _business = business;
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTable([FromBody] Table table)
+        public IActionResult AddTable([FromBody] Table table)
         {
-            _context.Tables.Add(table);
-            await _context.SaveChangesAsync();
-            return Ok("Table Added!");
+            if (table == null) return BadRequest();
+            _business.Create(table);
+            return Ok(table);
         }
 
         [HttpGet("get_tables")]
-        public async Task<IActionResult> GetAllTables()
+        public IActionResult GetAllTables()
         {
-            var table = await _context.Tables.ToListAsync();
-            return Ok(table);
+            return Ok(_business.GetAll());
+        }
+
+        [HttpGet("get_tables{id}")]
+        public IActionResult GetAllTables(int id)
+        {
+            return Ok(_business.GetById(id));
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTable(int id) 
+        {
+            _business.Delete(id);
+            return NoContent();
         }
     }
 }
